@@ -23,6 +23,14 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $useDigits = $this->faker->boolean;
+
+        if ($useDigits) {
+            $name = $this->faker->numerify(str_repeat('#', $this->faker->numberBetween(1, 12)));
+        } else {
+            $name = $this->faker->lastName; // Используем только фамилию, чтобы избежать пробелов
+        }
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
